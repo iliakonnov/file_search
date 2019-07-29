@@ -1,0 +1,74 @@
+WHITESPACE = _{ " " }
+ident = _{ASCII_ALPHANUMERIC}
+
+// Some utilites
+value = _{
+	(
+    	"\""
+        ~ (
+			"\\" ~ "\""
+      		| !"\"" ~ ANY
+        )*
+        ~ "\""
+    )
+	| ident+
+}
+eq = {
+	value ~ "=" ~ value
+}
+eq_or_value = _{
+	eq
+    | value
+}
+
+// Modifier
+modifier = {
+	eq_or_value
+}
+
+// Macros
+macros = {
+	"{" ~ value+ ~ "}"
+}
+
+// Function call
+func_arg = {
+	eq_or_value
+}
+
+function = {
+	value+ ~ "(" ~ (func_arg ~ ",")* ~ func_arg? ~ ")"
+}
+
+// Command stuff
+command_expr = {
+	macros
+    | function
+    | eq
+}
+command = {
+	((modifier ~ ",")* ~ modifier ~ ":")? ~ command_expr
+}
+
+// Expression stuff
+braces = {
+	((modifier ~ ",")* ~ modifier ~ ";")?
+    ~ (
+      command
+      | "(" ~ expression ~ ")"
+    )
+}
+and = {
+	braces ~ ("&&" ~ braces)*
+}
+expression = {
+	and ~ ("||" ~ and)*
+}
+
+// Parse from here
+entry_point = _{
+	SOI
+    ~ ((modifier ~ ",")* ~ modifier ~ ";")?
+	~ expression
+    ~ EOI
+}
