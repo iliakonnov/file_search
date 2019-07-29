@@ -10,19 +10,13 @@ rust:
   - stable
 
 env:
-- FEATURES = ""
+  - COVERAGE="" FEATURES=""
+  - COVERAGE="yes" FEATURES="--features make_dump"
 
-matrix:
-  include:
-    - rust: stable
-      env:
-        - FEATURES=""
-    - rust: stable
-      env:
-        - FEATURES="--features make_dump"
-
-before_cache:
-- cargo install cargo-tarpaulin -f
+before_cache: |
+  if [[ "$COVERAGE" == "yes" ]]; then
+    cargo install cargo-tarpaulin -f
+  fi
 
 before_script:
 - rustup component add rustfmt
@@ -31,10 +25,12 @@ before_script:
 script: |
   echo FEATURES=$FEATURES
   cargo fmt --all -- --check
-  cargo build --all-targets $CARGO_FEATURES
-  cargo clippy --all-targets $CARGO_FEATURES
-  cargo test --all-targets $CARGO_FEATURES
+  cargo build --all-targets $FEATURES
+  cargo clippy --all-targets $FEATURES
+  cargo test --all-targets $FEATURES
 
 after_success: |
-  cargo tarpaulin --out Xml
-  bash <(curl -s https://codecov.io/bash)
+  if [[ "$COVERAGE" == "yes" ]]; then
+    cargo tarpaulin --out Xml --all $FEATURES
+    bash <(curl -s https://codecov.io/bash)
+  fi
