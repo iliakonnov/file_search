@@ -1,12 +1,15 @@
 use crate::mixed::MixedString;
 
-use crate::offseted_reader::OffsetedReader;
 use byteorder::{ByteOrder, ReadBytesExt};
 use chrono::NaiveDateTime;
 
 use std::fmt;
-use std::fmt::{Debug, Display};
 use std::io::{Error, ErrorKind, Read, Result};
+
+#[cfg(feature = "make_dump")]
+use crate::offseted_reader::OffsetedReader;
+#[cfg(feature = "make_dump")]
+use std::fmt::{Debug, Display};
 
 // https://users.rust-lang.org/t/is-it-possible-to-implement-debug-for-fn-type/14824/3
 pub(super) struct Debuggable<T: ?Sized> {
@@ -78,6 +81,7 @@ pub(super) fn hex(arr: &[u8]) -> String {
 }
 
 #[cfg(feature = "make_dump")]
+#[cfg_attr(tarpaulin, skip)]
 pub(super) fn _log<D: Display, T: Debug, R: Read>(
     hex: D,
     val: T,
@@ -85,8 +89,10 @@ pub(super) fn _log<D: Display, T: Debug, R: Read>(
     description: &str,
     len: usize,
 ) {
-    let current = reader.get_offset();
+    let current = reader.get_offset() as isize;
+    let len = len as isize;
     let begin = if len == 0 { 0 } else { current - len };
+
     println!(
         "[{: <10}] {: <30} [{: <10}] {: <10} {:?}",
         begin,
@@ -102,6 +108,7 @@ pub(super) fn nop<T: std::any::Any>(_x: T) {}
 macro_rules! log {
     ($($args:tt)*) => {
         #[cfg(feature="make_dump")]
+        #[cfg_attr(tarpaulin, skip)]
         {
             _log($($args)*)
         }

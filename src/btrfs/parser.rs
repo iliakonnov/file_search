@@ -9,15 +9,19 @@ use chrono::{NaiveDate, NaiveDateTime, NaiveTime};
 
 use std::io::{Error, ErrorKind, Read, Result};
 
+#[cfg(feature = "make_dump")]
 use super::utils::*;
-
-struct Header {
-    magic: String,
-    version: u32,
-}
 
 pub struct Settings {
     pub bypass_errors: bool,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Self {
+            bypass_errors: false,
+        }
+    }
 }
 
 pub struct Parser {
