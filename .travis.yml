@@ -10,8 +10,16 @@ rust:
   - stable
 
 env:
-- CARGO_FEATURES = ""
-- CARGO_FEATURES = "make_dump"
+- FEATURES = ""
+
+matrix:
+  include:
+    - rust: stable
+      env:
+        - FEATURES=""
+    - rust: stable
+      env:
+        - FEATURES="--features make_dump"
 
 before_cache:
 - cargo install cargo-tarpaulin -f
@@ -20,11 +28,12 @@ before_script:
 - rustup component add rustfmt
 - rustup component add clippy
 
-script:
-- cargo fmt --all -- --check
-- cargo build --all-targets --features $CARGO_FEATURES
-- cargo clippy --all-targets --features $CARGO_FEATURES
-- cargo test --all-targets --features $CARGO_FEATURES
+script: |
+  echo FEATURES=$FEATURES
+  cargo fmt --all -- --check
+  cargo build --all-targets $CARGO_FEATURES
+  cargo clippy --all-targets $CARGO_FEATURES
+  cargo test --all-targets $CARGO_FEATURES
 
 after_success: |
   cargo tarpaulin --out Xml
