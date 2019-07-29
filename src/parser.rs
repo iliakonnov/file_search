@@ -11,10 +11,12 @@ use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::fmt;
 use std::fmt::Debug;
-use std::io::{Cursor, Error, ErrorKind, Read, Result};
+use std::io::{Error, ErrorKind, Read, Result};
 
 #[cfg(feature = "make_dump")]
 use std::fmt::Display;
+#[cfg(feature = "make_dump")]
+use std::io::Cursor;
 
 // https://users.rust-lang.org/t/is-it-possible-to-implement-debug-for-fn-type/14824/3
 pub struct Debuggable<T: ?Sized> {
@@ -104,6 +106,8 @@ fn _log<D: Display, T: Debug, R: Read>(
         val
     );
 }
+
+fn nop<T: std::any::Any>(_x: T) {}
 
 macro_rules! log {
     ($($args:tt)*) => {
@@ -258,11 +262,10 @@ fn _tlv_get<T: Debug>(cmd: &Command, val: TLVValue<T>, def: Option<T>) -> Result
     match val {
         TLVValue::None(none) => match def {
             Some(val) => {
-                let _r = &mut OffsetedReader::new(Cursor::new(Vec::new()));
                 log!(
                     "...",
                     format!("{:?} = {:?} @ {:?}", none, &val, cmd),
-                    r,
+                    &mut OffsetedReader::new(Cursor::new(Vec::new())),
                     "TLV Def",
                     0
                 );
@@ -496,9 +499,10 @@ impl Parser {
         let cmd = Command::new(cmd_id);
         log!(hex(&cmd_id.to_le_bytes()), &cmd, reader, "cmd:cmd", 2);
 
-        let _checksum = reader.read_u32::<LittleEndian>()?;
+        let checksum = reader.read_u32::<LittleEndian>()?;
         log!(hex(&checksum.to_le_bytes()), checksum, reader, "cmd:crc", 4);
-        // TODO: validate checksum
+        // TODO: Check CRC32
+        nop(checksum);
 
         let mut tlvs = OffsetedReader::after(reader.get_offset(), reader.take(size.into()));
         let tlv = self.read_tlvs(&mut tlvs)?;

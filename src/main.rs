@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-#![warn(
+#![deny(
     clippy::all,
     clippy::correctness,
     clippy::style,
