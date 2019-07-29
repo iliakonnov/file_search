@@ -171,8 +171,8 @@ macro_rules! tlv {
         impl<T> Into<Option<T>> for $wrapper<T> {
             fn into(self) -> Option<T> {
                 match self {
-                    Self::None(_) => None,
-                    Self::Some(res) => Some(res)
+                    $wrapper::None(_) => None,
+                    $wrapper::Some(res) => Some(res)
                 }
             }
         }
@@ -196,7 +196,7 @@ macro_rules! tlv {
             fn new(id: u16) -> Option<Self> {
                 match id {
                     $(
-                        $val => Some(Self::$name),
+                        $val => Some($enm::$name),
                     )*
                     _ => None
                 }
@@ -305,9 +305,9 @@ macro_rules! cmd {
             fn new(id: u16) -> Self {
                 match id {
                     $(
-                        $val => Self::$name,
+                        $val => $strct::$name,
                     )*
-                    _ => Self::Unknown
+                    _ => $strct::Unknown
                 }
             }
         }

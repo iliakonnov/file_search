@@ -12,7 +12,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d470d18c-7ea2-445f-ab30-5bfa65374fd5" name="Default Changelist" comment="" />
+    <list default="true" id="d470d18c-7ea2-445f-ab30-5bfa65374fd5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.rs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/parser.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1428">
-              <caret line="581" column="17" selection-start-line="581" selection-start-column="17" selection-end-line="581" selection-end-column="17" />
+            <state relative-caret-position="319">
+              <caret line="461" column="14" selection-start-line="461" selection-start-column="8" selection-end-line="461" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -54,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mixed.rs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="897">
@@ -92,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/src/query.pest">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -126,7 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Chmod</find>
       <find>fn modify</find>
       <find>chwon</find>
       <find>modify</find>
@@ -156,6 +158,7 @@
       <find>uid</find>
       <find>.gid</find>
       <find>as u32</find>
+      <find>Self::</find>
     </findStrings>
     <replaceStrings>
       <replace>tlv.get</replace>
@@ -177,12 +180,12 @@
         <option value="$PROJECT_DIR$/src/query.pest.rs" />
         <option value="$PROJECT_DIR$/src/query.pest" />
         <option value="$PROJECT_DIR$/src/model.rs" />
-        <option value="$PROJECT_DIR$/src/parser.rs" />
         <option value="$PROJECT_DIR$/src/find.rs" />
         <option value="$PROJECT_DIR$/src/database.rs" />
         <option value="$PROJECT_DIR$/src/main.rs" />
         <option value="$PROJECT_DIR$/Cargo.toml" />
         <option value="$PROJECT_DIR$/src/mixed.rs" />
+        <option value="$PROJECT_DIR$/src/parser.rs" />
       </list>
     </option>
   </component>
@@ -226,6 +229,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -272,12 +276,12 @@
       <updated>1563955715673</updated>
       <workItem from="1563955721349" duration="50043000" />
       <workItem from="1564067136538" duration="29728000" />
-      <workItem from="1564219983237" duration="19237000" />
+      <workItem from="1564219983237" duration="19593000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99008000" />
+    <option name="totallyTimeSpent" value="99364000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1442" y="57" width="1916" height="1141" extended-state="0" />
@@ -558,17 +562,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1428">
-          <caret line="581" column="17" selection-start-line="581" selection-start-column="17" selection-end-line="581" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/query.pest">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
@@ -599,6 +596,13 @@
             <element signature="e#5326#5327#0" expanded="true" />
             <element signature="e#5357#5358#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="461" column="14" selection-start-line="461" selection-start-column="8" selection-end-line="461" selection-end-column="14" />
         </state>
       </provider>
     </entry>
