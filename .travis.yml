@@ -9,11 +9,19 @@ cache: cargo
 rust:
   - stable
 
+matrix:
+  allow_failures:  
+    - env: CLIPPY="yes" COVERAGE="" FEATURES=""
+    - env: CLIPPY="yes" COVERAGE="" FEATURES="--features make_dump"
+
 env:
-  - COVERAGE="" FEATURES=""
-  - COVERAGE="" FEATURES="--features make_dump"
+  - CLIPPY="" COVERAGE="" FEATURES=""
+  - CLIPPY="" COVERAGE="" FEATURES="--features make_dump"
 # tarpaulin builds too long, so separate it to different job
-  - COVERAGE="yes" FEATURES="--features make_dump"
+  - CLIPPY="" COVERAGE="yes" FEATURES="--features make_dump"
+# separate clippy and rustfmt, so they can fail
+  - CLIPPY="yes" COVERAGE="" FEATURES=""
+  - CLIPPY="yes" COVERAGE="" FEATURES="--features make_dump"
 
 before_cache: |
   if [[ "$COVERAGE" == "yes" ]]; then
@@ -26,10 +34,13 @@ before_script:
 
 script: |
   if [[ "$COVERAGE" != "yes" ]]; then
+    if [[ "$CLIPPY" == "yes" ]]; then
           cargo fmt --all -- --check && \
+          cargo clippy --all-targets $FEATURES -- -D warnings
+    else
           cargo build --all-targets $FEATURES && \
-          cargo clippy --all-targets $FEATURES -- -D warnings && \
           cargo test --all-targets $FEATURES
+    fi
   fi
 
 after_success: |

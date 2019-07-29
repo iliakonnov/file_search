@@ -322,7 +322,7 @@ mod tests {
 
         let res = cmd.tlv_get_auto(val);
         assert!(res.is_ok());
-        assert_eq!(res.unwrap(), std::u64::MAX);
+        assert_eq!(res.unwrap(), u64::max_value());
     }
 
     #[test]
