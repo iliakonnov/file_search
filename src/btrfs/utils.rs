@@ -9,6 +9,8 @@ use std::io::{Error, ErrorKind, Read, Result};
 #[cfg(feature = "make_dump")]
 use crate::offseted_reader::OffsetedReader;
 #[cfg(feature = "make_dump")]
+use std::convert::TryInto;
+#[cfg(feature = "make_dump")]
 use std::fmt::{Debug, Display};
 
 // https://users.rust-lang.org/t/is-it-possible-to-implement-debug-for-fn-type/14824/3
@@ -89,8 +91,8 @@ pub(super) fn _log<D: Display, T: Debug, R: Read>(
     description: &str,
     len: usize,
 ) {
-    let current = reader.get_offset() as isize;
-    let len = len as isize;
+    let current: isize = reader.get_offset().try_into().unwrap_or(isize::max_value());
+    let len: isize = len.try_into().unwrap_or(isize::max_value());
     let begin = if len == 0 { 0 } else { current - len };
 
     println!(
