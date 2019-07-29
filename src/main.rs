@@ -12,20 +12,20 @@
 
 use clap::{crate_version, App, AppSettings, Arg, ArgMatches, SubCommand};
 
+mod btrfs;
 mod database;
 mod find;
 mod mixed;
 mod model;
 mod offseted_reader;
-mod parser;
 
 fn update(_args: &ArgMatches) {
     let stdin = std::io::stdin();
     let mut reader = stdin.lock();
-    let settings = parser::Settings {
+    let settings = btrfs::parser::Settings {
         bypass_errors: true,
     };
-    let parser = parser::Parser::new(settings);
+    let parser = btrfs::parser::Parser::new(settings);
     match parser.parse(&mut reader) {
         Ok(res) => {
             let _out = std::fs::File::create("./ouput.json").unwrap();
