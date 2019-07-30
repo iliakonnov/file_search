@@ -59,6 +59,12 @@ impl MixedString {
         }
     }
 
+    pub fn from_str(s: &str) -> Self {
+        Self {
+            data: vec![Mixed::String(s.to_string())],
+        }
+    }
+
     pub fn to_string(&self) -> String {
         let mut res = String::new();
         for data in &self.data {
@@ -160,6 +166,24 @@ impl fmt::Display for MixedString {
 impl fmt::Debug for MixedString {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         self.data.fmt(f)
+    }
+}
+
+impl From<String> for MixedString {
+    fn from(s: String) -> Self {
+        Self::from_string(s)
+    }
+}
+
+impl From<&str> for MixedString {
+    fn from(s: &str) -> Self {
+        Self::from_str(s)
+    }
+}
+
+impl From<&[u8]> for MixedString {
+    fn from(b: &[u8]) -> Self {
+        Self::from_bytes(b)
     }
 }
 

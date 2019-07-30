@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use std::fs;
 use std::os::unix::fs::FileTypeExt;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum FileType {
     File = 0,
     Directory = 1,
@@ -46,7 +46,7 @@ impl From<fs::FileType> for FileType {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct FileInfo {
     pub filename: MixedString,
     // https://doc.rust-lang.org/std/os/unix/fs/trait.PermissionsExt.html#tymethod.mode
@@ -60,11 +60,13 @@ pub struct FileInfo {
     pub filetype: FileType,
 }
 
+#[derive(Debug)]
 pub enum SubvolumeSource {
     Btrfs { uuid: u128 },
     Find { path: MixedString },
 }
 
+#[derive(Debug)]
 pub struct SubvolumeInfo {
     pub source: SubvolumeSource,
     pub overwrite: bool,

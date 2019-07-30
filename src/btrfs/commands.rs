@@ -135,9 +135,6 @@ impl Parser {
                 let from = cmd.tlv_get(tlv.Path)?;
                 let to = cmd.tlv_get(tlv.PathTo)?;
                 let subvol = self.subvol()?;
-
-                subvol.load_file(&from);
-
                 let entry = subvol.pop_file(&from)?;
                 subvol.files.insert(to, entry);
             }
@@ -148,10 +145,7 @@ impl Parser {
             Command::Unlink | Command::Rmdir => {
                 let path = cmd.tlv_get(tlv.Path)?;
                 let subvol = self.subvol()?;
-                subvol.load_file(&path);
-                subvol.files.remove(&path).ok_or_else(|| {
-                    Error::new(ErrorKind::InvalidData, "Deleting file that does not exists")
-                })?;
+                subvol.del_file(path)?;
             }
             Command::SetXattr | Command::RemoveXattr => {
                 // TODO
