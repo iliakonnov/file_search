@@ -25,7 +25,11 @@ env:
 
 before_cache: |
   if [[ "$COVERAGE" == "yes" ]]; then
-    cargo install cargo-tarpaulin -f
+    cargo install cargo-update
+    cargo install-update cargo-update
+
+    cargo install cargo-tarpaulin
+    cargo install-update cargo-tarpaulin
   fi
 
 before_script:
